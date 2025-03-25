@@ -29,7 +29,8 @@ body {
 
 .flex {
     display: flex;
-    flex-direction: column; /* Items stack vertically */
+    flex-direction: column;
+    flex-wrap: wrap;
     gap: 10px;
 }
 #sortBy {
@@ -79,4 +80,12 @@ body {
 
 nav #nextHeader, #previousHeader {
     font-size: 1.5em;
+}
+
+
+.group {
+    font-size: larger;
+    height: fit-content;
+    margin-top: 1%;
+    padding: 2px;
 }

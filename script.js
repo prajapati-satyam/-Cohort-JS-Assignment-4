@@ -1,12 +1,13 @@
 const container = document.getElementById('container');
 
-const books = [];
+let books = [];
 let pageCounter = 1;
 
 document.getElementById('previousHeader').disabled = true;
 document.getElementById('previousFooter').disabled = true;
 
 async function getBooks() {
+    document.getElementById('filter').value = null || '';
     try {
         let response = await fetch(`https://api.freeapi.app/api/v1/public/books?page=${pageCounter}&limit=15`);
         let response_json = await response.json();
@@ -56,6 +57,22 @@ function render_books() {
     })
 }
 
+function render_filtered_books(filtered_books) {
+    container.innerHTML = '';
+    filtered_books.forEach(element => {
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+            <h2>Title : ${element.title}</h2>
+            <p>Author : ${element.author}</p>
+            <p>Publisher : ${element.publisher}</p>
+            <p>Published Date : ${element.published_date}</p>
+            <p>Book Cover</p>
+            <img src=${element.thumbnail}>
+        `;
+        container.appendChild(card);
+    });
+}
 
 function sort_books() {
     const sortBy = document.getElementById('sortBy').value;
@@ -99,6 +116,21 @@ function previous_book() {
     display_books()
 }
 
+function filter_books() {
+    let filter_word = document.getElementById('filter').value.toLowerCase();
+
+    if (!filter_word) {
+        render_books();
+        return;
+    }
+
+    const filtered_books = books.filter(book =>
+        book.title.toLowerCase().includes(filter_word) || book.author.toLowerCase().includes(filter_word)
+    );
+
+    render_filtered_books(filtered_books);
+}
+
 document.getElementById('toggleview').addEventListener('click', toggleView);
 document.getElementById('sortBy').addEventListener('change', function() {
     sort_books();
@@ -109,3 +141,4 @@ document.getElementById('nextFooter').addEventListener('click', next_books);
 document.getElementById('nextHeader').addEventListener('click', next_books);
 document.getElementById('previousFooter').addEventListener('click', previous_book);
 document.getElementById('previousHeader').addEventListener('click', previous_book);
+document.getElementById('filter').addEventListener('input', filter_books)
