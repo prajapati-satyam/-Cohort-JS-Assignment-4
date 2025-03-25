@@ -32,7 +32,12 @@ body {
     flex-direction: column; /* Items stack vertically */
     gap: 10px;
 }
-
+#sortBy {
+    width: fit-content;
+    height: fit-content;
+    margin-top: 1%;
+    font-size: 1em;
+}
 
 .card {
     display: flex;
@@ -58,4 +63,20 @@ body {
 .card:hover {
     transform: scale(1.05);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+
+.footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.footer button {
+    margin: 5%;
+    font-size: 1.5em;
+}
+
+nav #nextHeader, #previousHeader {
+    font-size: 1.5em;
 }

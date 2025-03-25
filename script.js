@@ -1,34 +1,80 @@
 const container = document.getElementById('container');
 
+const books = [];
+let pageCounter = 1;
 
+document.getElementById('previousHeader').disabled = true;
+document.getElementById('previousFooter').disabled = true;
 
 async function getBooks() {
-    let a = await fetch('https://api.freeapi.app/api/v1/public/books?limit=20');
-    let responce_json = await a.json();
-    // console.log(responce_json.data.data);
+    try {
+        let response = await fetch(`https://api.freeapi.app/api/v1/public/books?page=${pageCounter}&limit=15`);
+        let response_json = await response.json();
 
-    responce_json.data.data.forEach(element => {
-        const title = element.volumeInfo.title;
-        const author = element.volumeInfo.authors.toString();
-        const publisher = element.volumeInfo.publisher;
-        const published_date = element.volumeInfo.publishedDate;
+        if (!response_json.data || !response_json.data.data || response_json.data.data.length === 0) {
+            console.warn("No more books to load or API limit reached.");
+            alert("No more books to load or API limit reached.")
+            document.getElementById('nextHeader').disabled = true;
+            document.getElementById('nextFooter').disabled = true;
+            return;
+        }
+
+        books.length = 0; 
+
+        response_json.data.data.forEach(element => {
+            const title = element.volumeInfo?.title || "Unknown Title";
+            const author = element.volumeInfo?.authors ? element.volumeInfo.authors.join(', ') : "Unknown Author";
+            const publisher = element.volumeInfo?.publisher || "Unknown Publisher";
+            const published_date = element.volumeInfo?.publishedDate || "0000-00-00";
+            const thumbnail = element.volumeInfo?.imageLinks?.thumbnail || '';
+
+            books.push({ title, author, publisher, published_date, thumbnail });
+        });
+    } catch (error) {
+        console.error("Error fetching books:", error);
+        alert("Error fetching books")
+    }
+}
+
+
+
+function render_books() {
+    container.innerHTML = '';
+    books.forEach(element => {
         const card =  document.createElement('div');
         card.className = 'card';
         card.id = 'card';
         card.innerHTML = `
-            <h2>Title : ${title}</h2>
-            <p>Author : ${author}</p>
-            <p>Publisher ${publisher}</p>
-            <p>Published Date : ${published_date}</p>
-            <p>Book Cover</p>
-            <img src=${element.volumeInfo.imageLinks.thumbnail}>
+        <h2>Title : ${element.title}</h2>
+        <p>Author : ${element.author}</p>
+        <p>Publisher : ${element.publisher}</p>
+        <p>Published Date : ${element.published_date}</p>
+        <p>Book Cover</p>
+        <img src=${element.thumbnail}>
         `
-         container.appendChild(card);
-    });
+        container.appendChild(card);
+    })
 }
 
 
-getBooks()
+function sort_books() {
+    const sortBy = document.getElementById('sortBy').value;
+    books.sort((a, b) => {
+        if (sortBy === "title") {
+            return a.title.localeCompare(b.title);
+        } else {
+            return new Date(a.published_date) - new Date(b.published_date);
+        }
+    });
+}
+
+async function display_books() {
+    await getBooks();
+    sort_books();
+    render_books();
+}
+
+display_books();
 
 function toggleView() {
     container.classList.toggle('grid');
@@ -40,4 +86,26 @@ function toggleView() {
     }
 }
 
-document.getElementById('toggleview').addEventListener('click', toggleView)
+
+function next_books() {
+    document.getElementById('previousHeader').disabled = false;
+document.getElementById('previousFooter').disabled = false;
+    pageCounter++;
+    display_books();
+}
+
+function previous_book() {
+    pageCounter--;
+    display_books()
+}
+
+document.getElementById('toggleview').addEventListener('click', toggleView);
+document.getElementById('sortBy').addEventListener('change', function() {
+    sort_books();
+    render_books();
+})
+
+document.getElementById('nextFooter').addEventListener('click', next_books);
+document.getElementById('nextHeader').addEventListener('click', next_books);
+document.getElementById('previousFooter').addEventListener('click', previous_book);
+document.getElementById('previousHeader').addEventListener('click', previous_book);
