@@ -14,6 +14,7 @@ async function getBooks() {
         const published_date = element.volumeInfo.publishedDate;
         const card =  document.createElement('div');
         card.className = 'card';
+        card.id = 'card';
         card.innerHTML = `
             <h2>Title : ${title}</h2>
             <p>Author : ${author}</p>
@@ -28,3 +29,15 @@ async function getBooks() {
 
 
 getBooks()
+
+function toggleView() {
+    container.classList.toggle('grid');
+    container.classList.toggle('flex');
+    if (document.getElementById('toggleview').textContent === 'View : Grid') {
+         document.getElementById('toggleview').textContent = 'View : List';
+    } else {
+        document.getElementById('toggleview').textContent = 'View : Grid'
+    }
+}
+
+document.getElementById('toggleview').addEventListener('click', toggleView)
