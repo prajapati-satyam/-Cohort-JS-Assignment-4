@@ -13,14 +13,14 @@ async function getBooks() {
         let response_json = await response.json();
 
         if (!response_json.data || !response_json.data.data || response_json.data.data.length === 0) {
-            console.warn("No more books to load or API limit reached.");
-            alert("No more books to load or API limit reached.")
+            console.log("No more books to load");
+            alert("No more books to load")
             document.getElementById('nextHeader').disabled = true;
             document.getElementById('nextFooter').disabled = true;
             return;
         }
 
-        books.length = 0; 
+        books.length = 0;
 
         response_json.data.data.forEach(element => {
             const title = element.volumeInfo?.title || "Unknown Title";
@@ -28,8 +28,8 @@ async function getBooks() {
             const publisher = element.volumeInfo?.publisher || "Unknown Publisher";
             const published_date = element.volumeInfo?.publishedDate || "0000-00-00";
             const thumbnail = element.volumeInfo?.imageLinks?.thumbnail || '';
-
-            books.push({ title, author, publisher, published_date, thumbnail });
+            const infoLink = element.volumeInfo.infoLink || '';
+            books.push({ title, author, publisher, published_date, thumbnail , infoLink});
         });
     } catch (error) {
         console.error("Error fetching books:", error);
@@ -46,12 +46,14 @@ function render_books() {
         card.className = 'card';
         card.id = 'card';
         card.innerHTML = `
+        <a href="${element.infoLink}" target="blank">
         <h2>Title : ${element.title}</h2>
         <p>Author : ${element.author}</p>
         <p>Publisher : ${element.publisher}</p>
         <p>Published Date : ${element.published_date}</p>
         <p>Book Cover</p>
         <img src=${element.thumbnail}>
+        </a>
         `
         container.appendChild(card);
     })
@@ -131,6 +133,21 @@ function filter_books() {
     render_filtered_books(filtered_books);
 }
 
+
+
+// function responsive() {
+//     if (window.innerWidth <= 795) {
+//         container.classList.remove("grid");
+//     } else {
+//         container.classList.add("grid");
+//     }
+// }
+
+
+// responsive()
+
+
+
 document.getElementById('toggleview').addEventListener('click', toggleView);
 document.getElementById('sortBy').addEventListener('change', function() {
     sort_books();
@@ -142,3 +159,4 @@ document.getElementById('nextHeader').addEventListener('click', next_books);
 document.getElementById('previousFooter').addEventListener('click', previous_book);
 document.getElementById('previousHeader').addEventListener('click', previous_book);
 document.getElementById('filter').addEventListener('input', filter_books)
+// window.addEventListener("resize", responsive);

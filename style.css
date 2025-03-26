@@ -1,13 +1,16 @@
-.main-header{
+.main-header {
     /* text-align: center; */
     font-size: 2em;
 }
+
 nav {
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     margin: 20px;
+    flex-wrap: wrap;
 }
+
 nav button {
     width: fit-content;
     height: fit-content;
@@ -18,11 +21,15 @@ nav button {
 body {
     background-color: rgb(59, 59, 83);
     color: aliceblue;
+    transition: all cubic-bezier(0.01, 0.19, 0.47, 1.24);
+    overflow: scroll;
 }
 
 .grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+    justify-content: center;
+    align-items: center;
     gap: 5px;
     margin: 15px;
 }
@@ -30,9 +37,12 @@ body {
 .flex {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
     gap: 10px;
 }
+
 #sortBy {
     width: fit-content;
     height: fit-content;
@@ -57,10 +67,12 @@ body {
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 .card img {
     margin-bottom: 10px;
     border-radius: 5px;
 }
+
 .card:hover {
     transform: scale(1.05);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
@@ -78,7 +90,8 @@ body {
     font-size: 1.5em;
 }
 
-nav #nextHeader, #previousHeader {
+nav #nextHeader,
+#previousHeader {
     font-size: 1.5em;
 }
 
@@ -88,4 +101,41 @@ nav #nextHeader, #previousHeader {
     height: fit-content;
     margin-top: 1%;
     padding: 2px;
+}
+
+a {
+    color: inherit;
+}
+
+@media screen and (max-width: 992px) {
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 5px;
+        margin: 15px;
+    }
+}
+
+@media screen and (max-width: 795px) {
+    .grid {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        margin: auto;
+        flex-wrap: wrap;
+    }
+}
+
+
+@media screen and (min-width: 1980px) {
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        margin: 15px;
+    }
 }
