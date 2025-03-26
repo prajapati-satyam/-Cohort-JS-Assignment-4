@@ -133,21 +133,6 @@ function filter_books() {
     render_filtered_books(filtered_books);
 }
 
-
-
-// function responsive() {
-//     if (window.innerWidth <= 795) {
-//         container.classList.remove("grid");
-//     } else {
-//         container.classList.add("grid");
-//     }
-// }
-
-
-// responsive()
-
-
-
 document.getElementById('toggleview').addEventListener('click', toggleView);
 document.getElementById('sortBy').addEventListener('change', function() {
     sort_books();
@@ -159,4 +144,3 @@ document.getElementById('nextHeader').addEventListener('click', next_books);
 document.getElementById('previousFooter').addEventListener('click', previous_book);
 document.getElementById('previousHeader').addEventListener('click', previous_book);
 document.getElementById('filter').addEventListener('input', filter_books)
-// window.addEventListener("resize", responsive);
