@@ -12,6 +12,8 @@ nav {
 }
 
 nav button {
+    background-color: black;
+    color: #fea243;
     width: fit-content;
     height: fit-content;
     margin-top: 1%;
@@ -66,6 +68,7 @@ body {
     border: 2px solid #fea243;
     overflow: hidden;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    width: 100%;
 }
 
 .card img {
@@ -106,7 +109,23 @@ nav #nextHeader,
 a {
     color: inherit;
 }
+.nav-items {
+    border: solid #43d2fe 2px;
+    border-radius: 5px;
+    padding: 5px;
+   margin: 15px;
+}
 
+.nav-items:hover {
+position: relative;
+bottom: 4px;
+cursor: pointer;
+}
+input {
+    border: 1px solid black;
+    padding: 2px;
+    font-size: medium;
+}
 @media screen and (max-width: 992px) {
     .grid {
         display: grid;
@@ -133,6 +152,27 @@ a {
     .grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        margin: 15px;
+    }
+}
+@media screen and (min-width: 2260px) {
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        margin: 15px;
+    }
+}
+
+@media screen and (min-width: 2700px) {
+    .grid {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
         justify-content: center;
         align-items: center;
         gap: 5px;
