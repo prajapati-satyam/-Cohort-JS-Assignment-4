@@ -6,6 +6,8 @@ let pageCounter = 1;
 document.getElementById('previousHeader').disabled = true;
 document.getElementById('previousFooter').disabled = true;
 
+
+// function for fetch books and store it in array
 async function getBooks() {
     document.getElementById('filter').value = null || '';
     try {
@@ -38,7 +40,7 @@ async function getBooks() {
 }
 
 
-
+// function for render books on body container element
 function render_books() {
     container.innerHTML = '';
     books.forEach(element => {
@@ -59,6 +61,8 @@ function render_books() {
     })
 }
 
+
+// re render books which are filter by user
 function render_filtered_books(filtered_books) {
     container.innerHTML = '';
     filtered_books.forEach(element => {
@@ -76,6 +80,7 @@ function render_filtered_books(filtered_books) {
     });
 }
 
+//  sort books by date and title
 function sort_books() {
     const sortBy = document.getElementById('sortBy').value;
     books.sort((a, b) => {
@@ -87,14 +92,18 @@ function sort_books() {
     });
 }
 
+// calling three fuction , fetchinhg books then sort it and then render it on user screen
 async function display_books() {
     await getBooks();
     sort_books();
     render_books();
 }
 
-display_books();
+display_books(); // calling function
 
+
+
+// function for toogle between grid and list (flex)
 function toggleView() {
     container.classList.toggle('grid');
     container.classList.toggle('flex');
@@ -105,7 +114,7 @@ function toggleView() {
     }
 }
 
-
+// calling next set of books and display it
 function next_books() {
     document.getElementById('previousHeader').disabled = false;
 document.getElementById('previousFooter').disabled = false;
@@ -113,11 +122,13 @@ document.getElementById('previousFooter').disabled = false;
     display_books();
 }
 
+//calling previous set of books and display it
 function previous_book() {
     pageCounter--;
     display_books()
 }
 
+//filter books using user input
 function filter_books() {
     let filter_word = document.getElementById('filter').value.toLowerCase();
 
@@ -133,6 +144,9 @@ function filter_books() {
     render_filtered_books(filtered_books);
 }
 
+
+
+//listening all events and calling approciet function
 document.getElementById('toggleview').addEventListener('click', toggleView);
 document.getElementById('sortBy').addEventListener('change', function() {
     sort_books();
