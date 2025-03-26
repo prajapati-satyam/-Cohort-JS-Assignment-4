@@ -58,8 +58,8 @@ body {
     justify-content: center;
     align-items: center;
     background-color: #242533;
-    margin-left: 10px;
-    margin-right: 10px;
+    /* margin-left: 10px; */
+    /* margin-right: 10px; */
     margin-top: 10px;
     border-radius: 10px;
     flex-wrap: wrap;
