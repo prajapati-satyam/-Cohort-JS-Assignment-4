@@ -9,13 +9,13 @@
 <body>
         <nav>
             <button class="nav-items" id="previousHeader">Previous</button>
-            <span class="nav-items" class="main-header">Book Library</span>
+            <span class="nav-items main-header" id="element">Book Library</span>
             <button class="nav-items" id="toggleview">View : Grid</button>
             <select class="nav-items" id="sortBy" title="sortBy">
                 <option value="title">Sort by Title</option>
                 <option value="date">Sort by Publish Date</option>
             </select>
-            <div class="nav-items" class="group">
+            <div class="nav-items group">
                 <label for="filter">Filter By</label>
                 <input id="filter" type="text" title="filter for Book" placeholder="Eg: J. K. Rowling">
             </div>
@@ -34,5 +34,16 @@
     <button id="nextFooter">Next</button>
 </div>
     <script src="script.js"></script>
+
+  <script src="https://unpkg.com/typed.js@2.1.0/dist/typed.umd.js"></script>
+
+  <script>
+    var typed = new Typed('#element', {
+      strings: ['Book Library', 'All types of Books', 'Responsive UI',' And much more', 'Book Library'],
+      typeSpeed: 70,
+
+    });
+  </script>
+</body>
 </body>
 </html>
